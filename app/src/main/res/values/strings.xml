@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Fitnes Traning</string>
+
+    <!-- App Settings -->
+    <string name="app_backend_api_key">1234</string>
+    <string name="yandex_metrica_app_id"></string>
+    <string name="adsApplicationID">ca-app-pub-3940256099942544~3347511713</string>
+    <string name="adsBannerId">ca-app-pub-3940256099942544/1033173711</string>
+    <string name="adsInterstitialID">ca-app-pub-3940256099942544/1033173712</string>
+    <!-- App Settings -->
+
+
 </resources>
