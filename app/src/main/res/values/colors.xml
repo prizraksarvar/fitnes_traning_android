@@ -3,4 +3,16 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="extraButtonColorStart">#c123de</color>
+    <color name="extraButtonColorEnd">#a20dbd</color>
+    <color name="extraButtonBorderColor">#a511c0</color>
+    <color name="extraButtonTextColor">#ffffff</color>
+
+    <color name="textColorLight">#ffffff</color>
+
+    <color name="textBackColorDarkOpacity">#c8000000</color>
+
+    <color name="backgroundStart">#f93656</color>
+    <color name="backgroundEnd">#fff264</color>
 </resources>
