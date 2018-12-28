@@ -18,7 +18,6 @@ import com.sarvarcorp.fitnestraning.design.animation.ButtonToFragmentTransition;
 import com.sarvarcorp.fitnestraning.entities.UniversalItem;
 import com.sarvarcorp.fitnestraning.listadapter.UniversalItemRecyclerViewAdapter;
 import com.sarvarcorp.fitnestraning.models.UniversalItemsViewModel;
-import com.sarvarcorp.fitnestraning.workers.FragmentWorker;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -36,7 +35,7 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
     private UniversalItemsViewModel viewModel;
     private RecyclerView mItemsListView;
     private UniversalItemRecyclerViewAdapter mRecyclerViewAdepter;
-    private UniversalItem parentItem;
+    private UniversalItem currentItem;
 
     private TextView title;
     private ConstraintLayout layout;
@@ -48,7 +47,22 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
 
     @Override
     protected int getLayoutID() {
-        return R.layout.fragment_universal_items;
+        int layoutID = 0;
+        String viewType = "";
+        if (currentItem != null && currentItem.id != 0) {
+            viewType = currentItem.viewType;
+        } else {
+            viewType = App.getComponent().provideStaticData().getMobileapp().viewType;
+        }
+
+        switch (viewType) {
+            case "list_with_image": layoutID = R.layout.ui_fragment_image_title_list; break;
+            case "list_with_image_title": layoutID = R.layout.ui_fragment_image_title_list; break;
+            case "cart": layoutID = R.layout.ui_fragment_title_list; break;
+            default: layoutID = R.layout.ui_fragment_title_list;
+        }
+
+        return layoutID;
     }
 
 
@@ -56,15 +70,15 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(UniversalItemsViewModel.class);
-        viewModel.init(parentItem != null ? parentItem.id : 0);
+        viewModel.init(currentItem != null ? currentItem.id : 0);
     }
 
-    public UniversalItem getParentItem() {
-        return parentItem;
+    public UniversalItem getCurrentItem() {
+        return currentItem;
     }
 
-    public void setParentItem(UniversalItem parentItem) {
-        this.parentItem = parentItem;
+    public void setCurrentItem(UniversalItem currentItem) {
+        this.currentItem = currentItem;
     }
 
     @Override
@@ -75,12 +89,12 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
         layout = view.findViewById(R.id.universalItemsFragmentLayout);
         title = view.findViewById(R.id.universalItemTitleTextView);
         String titleString = "";
-        if (parentItem!=null) {
-            titleString = parentItem.name;
+        if (currentItem !=null) {
+            titleString = currentItem.name;
         }
         title.setText(titleString);
 
-        if (parentItem!=null) {
+        if (currentItem !=null) {
             ViewCompat.setTransitionName(title, getTitleSharedName());
             ViewCompat.setTransitionName(layout, getLayoutSharedName());
             setBackgroundColor();
@@ -89,8 +103,8 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
     }
 
     private void setBackgroundColor() {
-        if (!parentItem.backgroundColor.equals("")) {
-            int color = Color.parseColor(parentItem.backgroundColor);
+        if (!currentItem.backgroundColor.equals("")) {
+            int color = Color.parseColor(currentItem.backgroundColor);
             color = Color.argb(50,Color.red(color),Color.green(color),Color.blue(color));
             layout.setBackgroundColor(color);
         }
@@ -111,7 +125,7 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
             try {
                 if (true) {
                     UniversalItemsFragment fragment = (UniversalItemsFragment) App.getComponent().provideFragmentWorker().getFragment(UniversalItemsFragment.class);
-                    fragment.setParentItem(universalItem);
+                    fragment.setCurrentItem(universalItem);
                     App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class,true, fragment, view);
                 } else {
                     UniversalItemFragment fragment = (UniversalItemFragment) App.getComponent().provideFragmentWorker().getFragment(UniversalItemFragment.class);
@@ -126,7 +140,7 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
 
     @Override
     public void prepareEnterAnimation(FragmentTransaction fragmentTranaction, BaseFragment oldFragment, View view) {
-        if (parentItem==null)
+        if (currentItem ==null)
             return;
         ConstraintLayout layout = view.findViewById(R.id.universalItemButton);
         TextView title = view.findViewById(R.id.universalItemTitleTextView);
@@ -143,14 +157,14 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
     }
 
     private String getTitleSharedName() {
-        return "universalItemTitle"+parentItem.id;
+        return "universalItemTitle"+ currentItem.id;
     }
 
     private String getLayoutSharedName() {
-        return "universalItemLayout"+parentItem.id;
+        return "universalItemLayout"+ currentItem.id;
     }
 
     private String getImageSharedName() {
-        return "universalItemImage"+parentItem.id;
+        return "universalItemImage"+ currentItem.id;
     }
 }
