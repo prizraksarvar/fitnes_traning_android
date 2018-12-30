@@ -64,24 +64,7 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
     }
 
     private void prepareAds() {
-        if (toAdsShowCounter==0) {
-
-            int r = random.nextInt(3+1)+2;
-            Handler h = new Handler();
-            h.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    boolean showed = App.getAdInterstitialWorker().showAds();
-                    if (showed) {
-                        toAdsShowCounter = r;
-                    } else {
-                        toAdsShowCounter = 0;
-                    }
-                }
-            },300);
-            return;
-        }
-        toAdsShowCounter--;
+        App.getAdInterstitialWorker().showAdsIfNeed();
     }
 
     public void showFragment(Class<?> clazz, boolean addToBackStack, BaseFragment fragment, View view) {

@@ -9,6 +9,10 @@
     <color name="extraButtonBorderColor">#a511c0</color>
     <color name="extraButtonTextColor">#ffffff</color>
 
+    <color name="drawableButtonTextColor">#000000</color>
+    <color name="drawableButtonBorderColor">#9e0075</color>
+    <color name="drawableButtonBackgroundColor">#ffffff</color>
+
     <color name="textColorLight">#ffffff</color>
 
     <color name="textBackColorDarkOpacity">#c8000000</color>

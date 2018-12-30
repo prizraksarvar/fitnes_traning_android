@@ -4,8 +4,11 @@ import android.content.Context;
 
 import com.sarvarcorp.fitnestraning.MainActivity;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
+import com.sarvarcorp.fitnestraning.entities.MobileappConfig;
 import com.sarvarcorp.fitnestraning.workers.AppDatabase;
 import com.sarvarcorp.fitnestraning.workers.FragmentWorker;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -23,6 +26,7 @@ public class StaticData {
     private AppDatabase appDatabase;
     private String appApiKey;
     private Mobileapp mobileapp;
+    private List<MobileappConfig> mobileappConfigs;
     private int mobileappId;
     private FragmentWorker fragmentWorker;
     private MainActivity mainActivity;
@@ -81,5 +85,13 @@ public class StaticData {
                     .build();
         }
         return appDatabase;
+    }
+
+    public List<MobileappConfig> getMobileappConfigs() {
+        return mobileappConfigs;
+    }
+
+    public void setMobileappConfigs(List<MobileappConfig> mobileappConfigs) {
+        this.mobileappConfigs = mobileappConfigs;
     }
 }

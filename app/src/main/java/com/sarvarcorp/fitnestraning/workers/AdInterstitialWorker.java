@@ -11,6 +11,7 @@ public class AdInterstitialWorker {
     protected int countSkip = 0;
     protected InterstitialAd mInterstitialAd;
     protected Context context;
+    protected boolean needShow = false;
     public AdInterstitialWorker(Context context) {
         this.context = context;
         mInterstitialAd = new InterstitialAd(context);
@@ -21,6 +22,14 @@ public class AdInterstitialWorker {
             @Override
             public void onAdClosed() {
                 loadAds();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                if (needShow) {
+                    showAds();
+                }
             }
         });
     }
@@ -40,8 +49,12 @@ public class AdInterstitialWorker {
 
     public Boolean showAds() {
         if (mInterstitialAd.isLoaded()) {
+            needShow = false;
+            setRandomSkip();
             mInterstitialAd.show();
             return true;
+        } else {
+            needShow = true;
         }
         return false;
     }

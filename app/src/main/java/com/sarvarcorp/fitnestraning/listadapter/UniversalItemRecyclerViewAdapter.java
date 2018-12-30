@@ -44,6 +44,8 @@ public class UniversalItemRecyclerViewAdapter
             case "button": layout = R.layout.list_item_universal_button; break;
             case "small_button": layout = R.layout.list_item_universal_small_button; break;
             case "small_button_with_image": layout = R.layout.list_item_universal_small_button_with_image; break;
+            case "drawable_button": layout = R.layout.ui_view_item_drawable_button; break;
+            case "drawable_button_image": layout = R.layout.ui_view_item_drawable_button_image; break;
             default: layout = R.layout.list_item_universal_with_image; break;
         }
         return layout;
@@ -88,6 +90,7 @@ public class UniversalItemRecyclerViewAdapter
         private final TextView titleView;
         private ImageView imageView;
         private ImageView smallImageView;
+        private ImageView statusImageView;
         private UniversalItem universalItem;
 
         public UniversalItemListViewHolder(View itemView, final UniversalItemListListener listener) {

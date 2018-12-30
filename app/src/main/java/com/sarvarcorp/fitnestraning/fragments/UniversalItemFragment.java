@@ -112,7 +112,7 @@ public class UniversalItemFragment extends BaseFragment implements Observer<Univ
                 Glide.with(App.getComponent().provideStaticData().getMainActivity())
                         .load(universalItem.image)
                         .into(imageView);
-                //setImage(universalItem.image, imageView);
+                //setImageView(universalItem.image, imageView);
             }
 
             setBackgroundColor(universalItem);

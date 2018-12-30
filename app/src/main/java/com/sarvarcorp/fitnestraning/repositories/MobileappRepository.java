@@ -51,7 +51,6 @@ public class MobileappRepository {
                         App.getComponent().provideStaticData().getMobileappId(), updatesOnly).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
-                    mobileappDao.save(response.body().data);
                     int[] ids = new int[response.body().configs.size()];
                     int i = 0;
                     for (MobileappConfig config :response.body().configs) {
@@ -61,6 +60,8 @@ public class MobileappRepository {
                     }
                     if (updatesOnly==0)
                         mobileappConfigDao.deleteNotIds(ids);
+
+                    mobileappDao.save(response.body().data);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

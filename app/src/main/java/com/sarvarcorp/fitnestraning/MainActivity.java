@@ -6,9 +6,14 @@ import android.view.View;
 import com.google.android.gms.ads.AdView;
 import com.sarvarcorp.fitnestraning.base.BaseAppCompatActivity;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
+import com.sarvarcorp.fitnestraning.entities.MobileappConfig;
+import com.sarvarcorp.fitnestraning.entities.UniversalItem;
 import com.sarvarcorp.fitnestraning.fragments.LoadingFragment;
 import com.sarvarcorp.fitnestraning.fragments.UniversalItemsFragment;
 import com.sarvarcorp.fitnestraning.models.MobileappViewModel;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.LiveData;
@@ -51,8 +56,24 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         App.getComponent().provideFragmentWorker().showFragment(LoadingFragment.class, false);
     }
 
-    protected void showStartFragment() {
+    protected void showStartFragment(Mobileapp mobileapp) {
         App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class, false);
+        try {
+            //toolbar.setVisibility(View.VISIBLE);
+            UniversalItem universalItem = new UniversalItem();
+            universalItem.id = 0;
+            universalItem.name = mobileapp.name;
+            universalItem.viewType = mobileapp.viewType;
+            universalItem.backgroundColor = mobileapp.backgroundColor;
+            universalItem.description = mobileapp.description;
+            universalItem.image = mobileapp.image;
+            UniversalItemsFragment fragment = null;
+            fragment = (UniversalItemsFragment) App.getComponent().provideFragmentWorker().getFragment(UniversalItemsFragment.class);
+            fragment.setCurrentItem(universalItem);
+            App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class,true, fragment, null);
+        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -71,7 +92,7 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         App.getComponent().provideStaticData().setMobileapp(mobileapp);
         if (loading) {
             loading=false;
-            showStartFragment();
+            showStartFragment(mobileapp);
         } else {
             onMobileappUpdate();
         }

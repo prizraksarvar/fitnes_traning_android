@@ -18,8 +18,11 @@ public interface MobileappConfigDao {
     @Insert(onConflict = REPLACE)
     void save(MobileappConfig mobileappConfig);
 
-    @Query("SELECT * FROM MobileappConfig WHERE id = :id")
-    LiveData<MobileappConfig> get(int id);
+    @Query("SELECT * FROM MobileappConfig")
+    LiveData<List<MobileappConfig>> getAll();
+
+    @Query("SELECT * FROM MobileappConfig")
+    List<MobileappConfig> getAllNotLive();
 
     @Query("SELECT * FROM MobileappConfig")
     LiveData<List<MobileappConfig>> getList();
