@@ -20,4 +20,5 @@ public class UniversalItem {
     public String description;
     public String backgroundColor;
     public String listBackgroundColor;
+    public int timerTime;
 }

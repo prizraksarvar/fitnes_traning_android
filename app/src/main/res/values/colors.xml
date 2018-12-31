@@ -21,4 +21,7 @@
     <color name="backgroundEnd">#fff264</color>
     <color name="backgroundTransparent">#00000000</color>
     <color name="bacgroundLight">#ffffff</color>
+
+    <color name="timerBorder">#04ff00</color>
+    <color name="timerBackground">#ffffff</color>
 </resources>

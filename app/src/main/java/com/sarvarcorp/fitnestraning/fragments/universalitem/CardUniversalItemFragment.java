@@ -12,6 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 public class CardUniversalItemFragment extends BaseUniversalItemFragment {
     @Override
     public int getLayoutID() {
-        return R.layout.ui_fragment_cart_3;
+        return R.layout.ui_fragment_cart;
     }
 }

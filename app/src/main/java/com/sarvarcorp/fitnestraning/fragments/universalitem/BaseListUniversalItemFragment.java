@@ -55,7 +55,7 @@ public abstract class BaseListUniversalItemFragment extends BaseUniversalItemFra
 
     protected void initRecyclerView(View view) {
         mItemsListView = view.findViewById(R.id.universalItemsRecyclerView);
-        mRecyclerViewAdepter = new UniversalItemRecyclerViewAdapter(fragment,fragment);
+        mRecyclerViewAdepter = new UniversalItemRecyclerViewAdapter(this,fragment);
         mItemsListView.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         //mItemsListView.setLayoutManager(new GridLayoutManager(this.getContext(),2));
         mItemsListView.setAdapter(mRecyclerViewAdepter);

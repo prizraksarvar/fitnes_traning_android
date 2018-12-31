@@ -5,6 +5,7 @@ import android.content.Context;
 import com.sarvarcorp.fitnestraning.MainActivity;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
 import com.sarvarcorp.fitnestraning.entities.MobileappConfig;
+import com.sarvarcorp.fitnestraning.fragments.TimerFragment;
 import com.sarvarcorp.fitnestraning.workers.AppDatabase;
 import com.sarvarcorp.fitnestraning.workers.FragmentWorker;
 
@@ -30,6 +31,7 @@ public class StaticData {
     private int mobileappId;
     private FragmentWorker fragmentWorker;
     private MainActivity mainActivity;
+    private TimerFragment timerFragment;
 
     public FragmentManager getFragmentManager() {
         return fragmentManager;
@@ -81,7 +83,7 @@ public class StaticData {
     public AppDatabase getAppDatabase(Context context) {
         if (appDatabase==null) {
             appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database")
-                    .addMigrations()
+                    .addMigrations(AppDatabase.MIGRATION_1_2)
                     .build();
         }
         return appDatabase;
@@ -93,5 +95,13 @@ public class StaticData {
 
     public void setMobileappConfigs(List<MobileappConfig> mobileappConfigs) {
         this.mobileappConfigs = mobileappConfigs;
+    }
+
+    public TimerFragment getTimerFragment() {
+        return timerFragment;
+    }
+
+    public void setTimerFragment(TimerFragment timerFragment) {
+        this.timerFragment = timerFragment;
     }
 }

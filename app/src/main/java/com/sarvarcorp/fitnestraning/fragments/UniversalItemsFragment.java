@@ -18,8 +18,12 @@ import com.sarvarcorp.fitnestraning.design.animation.ButtonToFragmentTransition;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
 import com.sarvarcorp.fitnestraning.entities.UniversalItem;
 import com.sarvarcorp.fitnestraning.fragments.universalitem.BaseUniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.Card3UniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.CardUniversalItemFragment;
 import com.sarvarcorp.fitnestraning.fragments.universalitem.ImageListUniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.ListUniversalItemFragment;
 import com.sarvarcorp.fitnestraning.fragments.universalitem.TitleImageListUniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.TitleListUniversalItemFragment;
 import com.sarvarcorp.fitnestraning.listadapter.UniversalItemRecyclerViewAdapter;
 import com.sarvarcorp.fitnestraning.models.UniversalItemsViewModel;
 
@@ -35,7 +39,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-public class UniversalItemsFragment extends BaseFragment implements UniversalItemRecyclerViewAdapter.UniversalItemListListener {
+public class UniversalItemsFragment extends BaseFragment {
     protected UniversalItem currentItem;
     protected BaseUniversalItemFragment currentBackendFragment;
 
@@ -45,36 +49,13 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
 
     @Override
     protected int getLayoutID() {
-        int layoutID = 0;
-        String viewType = "";
-        if (currentItem != null) {
-            viewType = currentItem.viewType;
-        }
-
-        switch (viewType) {
-            case "list_with_image": layoutID = R.layout.ui_fragment_image_title_list; break;
-            case "list_with_image_title": layoutID = R.layout.ui_fragment_image_title_list; break;
-            case "cart": layoutID = R.layout.ui_fragment_cart; break;
-            default: layoutID = R.layout.ui_fragment_title_list;
-        }
-
-        return layoutID;
+        return currentBackendFragment.getLayoutID();
     }
 
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String viewType = "";
-        if (currentItem != null) {
-            viewType = currentItem.viewType;
-        }
-        switch (viewType) {
-            case "list_with_image": currentBackendFragment = new ImageListUniversalItemFragment(); break;
-            case "list_with_image_title": currentBackendFragment = new TitleImageListUniversalItemFragment(); break;
-            case "cart": currentBackendFragment = R.layout.ui_fragment_cart; break;
-            default: currentBackendFragment = R.layout.ui_fragment_title_list;
-        }
     }
 
     public UniversalItem getCurrentItem() {
@@ -83,114 +64,34 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
 
     public void setCurrentItem(UniversalItem currentItem) {
         this.currentItem = currentItem;
+        initCurrentBackendFragment();
+    }
+
+    protected void initCurrentBackendFragment() {
+        String viewType = "";
+        if (currentItem != null) {
+            viewType = currentItem.viewType;
+        }
+        switch (viewType) {
+            case "list_with_image": currentBackendFragment = new ImageListUniversalItemFragment(); break;
+            case "list_with_image_title": currentBackendFragment = new TitleImageListUniversalItemFragment(); break;
+            case "cart": currentBackendFragment = new CardUniversalItemFragment(); break;
+            case "cart_3": currentBackendFragment = new Card3UniversalItemFragment(); break;
+            default: currentBackendFragment = new TitleListUniversalItemFragment();
+        }
+        currentBackendFragment.setCurrentItem(currentItem);
+        currentBackendFragment.onCreate(this);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        initRecyclerView(view);
-
-        initViews(view);
-
-        setTitle(currentItem !=null ? currentItem.name : "");
-        //App.getComponent().provideStaticData().getMainActivity().setToolbarTitle(currentItem !=null ? currentItem.name : "");
-        if (currentItem !=null) {
-            /*if (currentItem.id>0) {
-                App.getComponent().provideStaticData().getMainActivity().showToolbar();
-                App.getComponent().provideStaticData().getMainActivity().showToolbarBackButton();
-            } else {
-                App.getComponent().provideStaticData().getMainActivity().hideToolbar();
-                App.getComponent().provideStaticData().getMainActivity().hideToolbarBackButton();
-            }*/
-            ViewCompat.setTransitionName(titleTextView, getTitleSharedName());
-            ViewCompat.setTransitionName(layout, getLayoutSharedName());
-            setBackgroundColor();
-        }
+        currentBackendFragment.onCreateView(view);
         return view;
-    }
-
-    protected void initViews(View view) {
-        layout = view.findViewById(R.id.universalItemsFragmentLayout);
-        titleTextView = view.findViewById(R.id.universalItemTitleTextView);
-        imageView = view.findViewById(R.id.universalItemImageView);
-    }
-
-    protected void setTitle(String titleString) {
-        if (titleTextView == null)
-            return;
-        titleTextView.setText(titleString);
-    }
-
-    protected void setImage(String image) {
-        if (imageView == null || image.equals(""))
-            return;
-
-        Glide.with(App.getComponent().provideStaticData().getMainActivity())
-                .load(image)
-                .into(imageView);
-    }
-
-    protected void setBackgroundColor() {
-        if (currentItem.backgroundColor != null && !currentItem.backgroundColor.equals("")) {
-            int color = Color.parseColor(currentItem.backgroundColor);
-            color = Color.argb(Color.alpha(color),Color.red(color),Color.green(color),Color.blue(color));
-            layout.setBackgroundColor(color);
-        }
-    }
-
-    protected void initRecyclerView(View view) {
-        mItemsListView = view.findViewById(R.id.universalItemsRecyclerView);
-        mRecyclerViewAdepter = new UniversalItemRecyclerViewAdapter(this,this);
-        mItemsListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        //mItemsListView.setLayoutManager(new GridLayoutManager(this.getContext(),2));
-        mItemsListView.setAdapter(mRecyclerViewAdepter);
-        mRecyclerViewAdepter.setValues(viewModel.getList());
-    }
-
-    @Override
-    public void onClickListItem(View view, UniversalItem universalItem) {
-        if (universalItem!=null && universalItem.id>0) {
-            try {
-                UniversalItemsFragment fragment = (UniversalItemsFragment) App.getComponent().provideFragmentWorker().getFragment(UniversalItemsFragment.class);
-                fragment.setCurrentItem(universalItem);
-                App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class,true, fragment, view);
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException | java.lang.InstantiationException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public void prepareEnterAnimation(FragmentTransaction fragmentTranaction, BaseFragment oldFragment, View view) {
-        if (currentItem ==null || view==null)
-            return;
-        ConstraintLayout layout = view.findViewById(R.id.universalItemButton);
-        TextView title = view.findViewById(R.id.universalItemTitleTextView);
-        ImageView imageView = view.findViewById(R.id.universalItemImageView);
-        fragmentTranaction.addSharedElement(title,getTitleSharedName());
-        fragmentTranaction.addSharedElement(layout,getLayoutSharedName());
-        if (imageView!=null && false) {
-            fragmentTranaction.addSharedElement(imageView,getImageSharedName());
-        }
-        setSharedElementEnterTransition(new ButtonToFragmentTransition());
-        setEnterTransition(new ChangeBounds());
-        setExitTransition(new Fade());
-        setSharedElementReturnTransition(new ButtonToFragmentTransition());
-    }
-
-    private String getTitleSharedName() {
-        return "universalItemTitle"+ currentItem.id;
-    }
-
-    private String getLayoutSharedName() {
-        return "universalItemLayout"+ currentItem.id;
-    }
-
-    private String getImageSharedName() {
-        return "universalItemImage"+ currentItem.id;
-    }
-
-    protected Mobileapp getMobileapp() {
-        return App.getComponent().provideStaticData().getMobileapp();
+        currentBackendFragment.prepareEnterAnimation(fragmentTranaction,oldFragment,view);
     }
 }

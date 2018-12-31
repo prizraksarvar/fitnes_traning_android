@@ -19,19 +19,19 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
                 Mobileapp.class,
                 MobileappConfig.class,
         },
-        version = 1
+        version = 2
 )
 public abstract class AppDatabase extends RoomDatabase {
     public abstract UniversalItemDao universalItemDao();
     public abstract MobileappDao mobileappDao();
     public abstract MobileappConfigDao mobileappConfigDao();
 
-    /*public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
+    public static final Migration MIGRATION_1_2 = new Migration(1, 2) {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
-            database.execSQL("DROP TABLE IF EXISTS ImageCache");
-            database.execSQL("CREATE TABLE IF NOT EXISTS `ImageCache` (`id` INTEGER NOT NULL, `url` TEXT, `created` INTEGER NOT NULL, PRIMARY KEY(`id`))");
+            database.execSQL("DROP TABLE IF EXISTS UniversalItem");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `UniversalItem` (`id` INTEGER NOT NULL, `parentId` INTEGER NOT NULL, `updatedDate` INTEGER NOT NULL, `viewType` TEXT, `listViewType` TEXT, `name` TEXT, `image` TEXT, `smallImage` TEXT, `description` TEXT, `backgroundColor` TEXT, `listBackgroundColor` TEXT, `timerTime` INTEGER NOT NULL, PRIMARY KEY(`id`))");
         }
-    };*/
+    };
 }
 

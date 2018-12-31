@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/uiTimerLayout"
+    android:layout_width="195dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/timer_background_animated"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/timer" />
+
+    <TextView
+        android:id="@+id/uiTimerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="05:00"
+        android:textAlignment="center"
+        android:textColor="@color/drawableButtonTextColor"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Start" />
+</LinearLayout>
