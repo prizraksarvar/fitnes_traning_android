@@ -6,11 +6,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="@color/browser_actions_bg_grey"
-    android:background="@drawable/bacground"
     tools:context=".fragments.UniversalItemsFragment">
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/universalItemImageView"
         android:layout_width="0dp"
         android:layout_height="180dp"
         android:scaleType="centerCrop"
@@ -30,7 +29,7 @@
         android:textColor="@color/textColorLight"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintBottom_toBottomOf="@+id/universalItemImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -38,7 +37,6 @@
         android:id="@+id/universalItemsRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/bacground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

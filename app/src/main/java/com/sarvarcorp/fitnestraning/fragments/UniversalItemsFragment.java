@@ -17,6 +17,9 @@ import com.sarvarcorp.fitnestraning.base.BaseFragment;
 import com.sarvarcorp.fitnestraning.design.animation.ButtonToFragmentTransition;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
 import com.sarvarcorp.fitnestraning.entities.UniversalItem;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.BaseUniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.ImageListUniversalItemFragment;
+import com.sarvarcorp.fitnestraning.fragments.universalitem.TitleImageListUniversalItemFragment;
 import com.sarvarcorp.fitnestraning.listadapter.UniversalItemRecyclerViewAdapter;
 import com.sarvarcorp.fitnestraning.models.UniversalItemsViewModel;
 
@@ -33,15 +36,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class UniversalItemsFragment extends BaseFragment implements UniversalItemRecyclerViewAdapter.UniversalItemListListener {
-    private UniversalItemsViewModel viewModel;
-    private RecyclerView mItemsListView;
-    private UniversalItemRecyclerViewAdapter mRecyclerViewAdepter;
-    private UniversalItem currentItem;
-
-    private ConstraintLayout layout;
-    private TextView titleTextView;
-    private ImageView imageView;
-
+    protected UniversalItem currentItem;
+    protected BaseUniversalItemFragment currentBackendFragment;
 
     public UniversalItemsFragment() {
 
@@ -58,7 +54,7 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
         switch (viewType) {
             case "list_with_image": layoutID = R.layout.ui_fragment_image_title_list; break;
             case "list_with_image_title": layoutID = R.layout.ui_fragment_image_title_list; break;
-            case "cart": layoutID = R.layout.ui_fragment_title_list; break;
+            case "cart": layoutID = R.layout.ui_fragment_cart; break;
             default: layoutID = R.layout.ui_fragment_title_list;
         }
 
@@ -69,8 +65,16 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(UniversalItemsViewModel.class);
-        viewModel.init(currentItem != null ? currentItem.id : 0);
+        String viewType = "";
+        if (currentItem != null) {
+            viewType = currentItem.viewType;
+        }
+        switch (viewType) {
+            case "list_with_image": currentBackendFragment = new ImageListUniversalItemFragment(); break;
+            case "list_with_image_title": currentBackendFragment = new TitleImageListUniversalItemFragment(); break;
+            case "cart": currentBackendFragment = R.layout.ui_fragment_cart; break;
+            default: currentBackendFragment = R.layout.ui_fragment_title_list;
+        }
     }
 
     public UniversalItem getCurrentItem() {
@@ -89,7 +93,15 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
         initViews(view);
 
         setTitle(currentItem !=null ? currentItem.name : "");
+        //App.getComponent().provideStaticData().getMainActivity().setToolbarTitle(currentItem !=null ? currentItem.name : "");
         if (currentItem !=null) {
+            /*if (currentItem.id>0) {
+                App.getComponent().provideStaticData().getMainActivity().showToolbar();
+                App.getComponent().provideStaticData().getMainActivity().showToolbarBackButton();
+            } else {
+                App.getComponent().provideStaticData().getMainActivity().hideToolbar();
+                App.getComponent().provideStaticData().getMainActivity().hideToolbarBackButton();
+            }*/
             ViewCompat.setTransitionName(titleTextView, getTitleSharedName());
             ViewCompat.setTransitionName(layout, getLayoutSharedName());
             setBackgroundColor();
@@ -157,7 +169,7 @@ public class UniversalItemsFragment extends BaseFragment implements UniversalIte
         ImageView imageView = view.findViewById(R.id.universalItemImageView);
         fragmentTranaction.addSharedElement(title,getTitleSharedName());
         fragmentTranaction.addSharedElement(layout,getLayoutSharedName());
-        if (imageView!=null && !false) {
+        if (imageView!=null && false) {
             fragmentTranaction.addSharedElement(imageView,getImageSharedName());
         }
         setSharedElementEnterTransition(new ButtonToFragmentTransition());

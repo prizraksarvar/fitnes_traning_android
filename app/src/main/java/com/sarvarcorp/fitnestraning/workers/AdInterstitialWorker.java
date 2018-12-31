@@ -28,6 +28,7 @@ public class AdInterstitialWorker {
             public void onAdLoaded() {
                 super.onAdLoaded();
                 if (needShow) {
+                    needShow = false;
                     showAds();
                 }
             }

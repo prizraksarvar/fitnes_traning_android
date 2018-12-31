@@ -19,4 +19,6 @@
 
     <color name="backgroundStart">#f93656</color>
     <color name="backgroundEnd">#fff264</color>
+    <color name="backgroundTransparent">#00000000</color>
+    <color name="bacgroundLight">#ffffff</color>
 </resources>

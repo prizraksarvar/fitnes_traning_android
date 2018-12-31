@@ -64,7 +64,13 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
     }
 
     private void prepareAds() {
-        App.getAdInterstitialWorker().showAdsIfNeed();
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                App.getAdInterstitialWorker().showAdsIfNeed();
+            }
+        },300);
     }
 
     public void showFragment(Class<?> clazz, boolean addToBackStack, BaseFragment fragment, View view) {
@@ -82,7 +88,6 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
         }
         currentFragment = clazz;
         fragmentTranaction.commit();
-        prepareAds();
     }
 
     public BaseFragment getCurrentFragment() {
@@ -102,10 +107,10 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
 
     @Override
     public void onBackStackChanged() {
+        prepareAds();
         if (fragmentManager.getFragments().size()>0) {
             Fragment fragment = getCurrentFragment();
-            currentFragment = fragment.getClass();
-            prepareAds();
+            Class<?> aClass = fragment.getClass();
         } else {
             currentFragment = null;
         }

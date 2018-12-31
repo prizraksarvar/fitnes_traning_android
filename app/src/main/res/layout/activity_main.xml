@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bacground"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -12,10 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="?attr/colorPrimary"
+        android:background="@color/backgroundTransparent"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
-        app:title="Title"
         app:titleMarginStart="54dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,11 +28,12 @@
 
     <fragment
         android:id="@+id/fragment2"
+        android:name="com.sarvarcorp.fitnestraning.fragments.ExtraButtonFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:name="com.sarvarcorp.fitnestraning.fragments.ExtraButtonFragment"
         tools:layout="@layout/fragment_extra_buttons" />
 
     <fragment
@@ -40,6 +41,7 @@
         android:name="com.sarvarcorp.fitnestraning.fragments.AdBannerFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         tools:layout="@layout/fragment_ad_banner" />
 
 

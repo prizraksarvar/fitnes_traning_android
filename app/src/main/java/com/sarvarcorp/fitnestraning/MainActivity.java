@@ -57,7 +57,6 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
     }
 
     protected void showStartFragment(Mobileapp mobileapp) {
-        App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class, false);
         try {
             //toolbar.setVisibility(View.VISIBLE);
             UniversalItem universalItem = new UniversalItem();
@@ -70,7 +69,7 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
             UniversalItemsFragment fragment = null;
             fragment = (UniversalItemsFragment) App.getComponent().provideFragmentWorker().getFragment(UniversalItemsFragment.class);
             fragment.setCurrentItem(universalItem);
-            App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class,true, fragment, null);
+            App.getComponent().provideFragmentWorker().showFragment(UniversalItemsFragment.class,false, fragment, null);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             e.printStackTrace();
         }
@@ -100,5 +99,33 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
 
     protected void onMobileappUpdate() {
         //TODO: need implement live theme update, I think need broadcast event
+    }
+
+    public void showToolbar() {
+        toolbar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideToolbar() {
+        toolbar.setVisibility(View.GONE);
+    }
+
+    public void showToolbarBackButton() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    public void hideToolbarBackButton() {
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    public void setToolbarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
