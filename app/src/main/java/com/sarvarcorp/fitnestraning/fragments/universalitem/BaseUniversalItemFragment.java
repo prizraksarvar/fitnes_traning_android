@@ -77,7 +77,7 @@ public abstract class BaseUniversalItemFragment {
     }
 
     protected void setImageToView(ImageView imageView, String image) {
-        if (!image.equals("") || imageView == null)
+        if (image.equals("") || imageView == null)
             return;
 
         Glide.with(fragment.getContext())
