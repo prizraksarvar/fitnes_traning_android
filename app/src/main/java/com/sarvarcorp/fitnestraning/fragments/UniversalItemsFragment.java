@@ -56,6 +56,7 @@ public class UniversalItemsFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        currentBackendFragment.onCreate();
     }
 
     public UniversalItem getCurrentItem() {
@@ -80,7 +81,7 @@ public class UniversalItemsFragment extends BaseFragment {
             default: currentBackendFragment = new TitleListUniversalItemFragment();
         }
         currentBackendFragment.setCurrentItem(currentItem);
-        currentBackendFragment.onCreate(this);
+        currentBackendFragment.setFragment(this);
     }
 
     @Override

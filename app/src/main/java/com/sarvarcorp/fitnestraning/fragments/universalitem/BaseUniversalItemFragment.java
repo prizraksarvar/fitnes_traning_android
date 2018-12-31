@@ -42,8 +42,11 @@ public abstract class BaseUniversalItemFragment {
 
     public abstract int getLayoutID();
 
-    public void onCreate(UniversalItemsFragment fragment) {
+    public void setFragment(UniversalItemsFragment fragment) {
         this.fragment = fragment;
+    }
+
+    public void onCreate() {
         viewModel = ViewModelProviders.of(fragment).get(UniversalItemsViewModel.class);
         viewModel.init(currentItem != null ? currentItem.id : 0);
     }
@@ -120,7 +123,6 @@ public abstract class BaseUniversalItemFragment {
     protected Mobileapp getMobileapp() {
         return App.getComponent().provideStaticData().getMobileapp();
     }
-
     protected String getSharedNameID() {
         return "" + currentItem.id;
     }
