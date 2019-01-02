@@ -48,7 +48,12 @@ public class UniversalItemRepository {
                 if (universalItemDao.unfreshCount(parentId,time-FRESH_TIMEOUT)>0) {
                     updatesOnly = 0;
                 }
-                response = webservice.getUniversalItems(App.getComponent().provideStaticData().getAppApiKey(), App.getComponent().provideStaticData().getMobileapp().id, parentId, updatesOnly).execute();
+                response = webservice.getUniversalItems(
+                        App.getComponent().provideStaticData().getAppApiKey(),
+                        App.getComponent().provideStaticData().getMobileapp().id,
+                        parentId,
+                        updatesOnly,
+                        App.getComponent().provideStaticData().getLanguage()).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
                     int[] ids = new int[response.body().data.size()];
@@ -77,7 +82,12 @@ public class UniversalItemRepository {
                 if (universalItemDao.isUnfresh(id,time-FRESH_TIMEOUT)) {
                     updatesOnly = 0;
                 }
-                response = webservice.getUniversalItem(App.getComponent().provideStaticData().getAppApiKey(), App.getComponent().provideStaticData().getMobileapp().id, id, updatesOnly).execute();
+                response = webservice.getUniversalItem(
+                        App.getComponent().provideStaticData().getAppApiKey(),
+                        App.getComponent().provideStaticData().getMobileapp().id,
+                        id,
+                        updatesOnly,
+                        App.getComponent().provideStaticData().getLanguage()).execute();
 
                 if (response.isSuccessful() && response.body() != null)
                     universalItemDao.save(response.body().data);

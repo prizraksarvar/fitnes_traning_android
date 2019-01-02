@@ -16,9 +16,6 @@ import retrofit2.http.Query;
 public interface Webservice {
     /*
      * Список универсальных элементов
-     * @param token
-     * @param parentId
-     * @return
      */
     @GET("/api/api_mobileapp/{mobileappId}/api_universal_item_v2/parent/{parentId}")
     @Headers({
@@ -30,15 +27,12 @@ public interface Webservice {
             @Header("token") String token,
             @Path("mobileappId") int mobileappId,
             @Path("parentId") int parentId,
-            @Query("updatesOnly") int updatesOnly
+            @Query("updatesOnly") int updatesOnly,
+            @Query("lang") String lang
     );
 
     /**
      * Получить универсальный элемент
-     * @param token
-     * @param id
-     * @param updatesOnly
-     * @return
      */
     @GET("/api/api_mobileapp/{mobileappId}/api_universal_item_v2/{id}")
     @Headers({
@@ -50,15 +44,12 @@ public interface Webservice {
             @Header("token") String token,
             @Path("mobileappId") int mobileappId,
             @Path("id") int id,
-            @Query("updatesOnly") int updatesOnly
+            @Query("updatesOnly") int updatesOnly,
+            @Query("lang") String lang
     );
 
     /**
      * Получить информацию о мобильном приложении и настройки
-     * @param token
-     * @param id
-     * @param updatesOnly
-     * @return
      */
     @GET("/api/api_mobileapp/{id}")
     @Headers({
@@ -69,6 +60,7 @@ public interface Webservice {
     Call<MobileappResponseAdapter> getMobileapp(
             @Header("token") String token,
             @Path("id") int id,
-            @Query("updatesOnly") int updatesOnly
+            @Query("updatesOnly") int updatesOnly,
+            @Query("lang") String lang
     );
 }

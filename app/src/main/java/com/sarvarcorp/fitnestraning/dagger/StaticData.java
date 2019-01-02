@@ -2,6 +2,7 @@ package com.sarvarcorp.fitnestraning.dagger;
 
 import android.content.Context;
 
+import com.sarvarcorp.fitnestraning.App;
 import com.sarvarcorp.fitnestraning.MainActivity;
 import com.sarvarcorp.fitnestraning.entities.Mobileapp;
 import com.sarvarcorp.fitnestraning.entities.MobileappConfig;
@@ -9,7 +10,9 @@ import com.sarvarcorp.fitnestraning.fragments.TimerFragment;
 import com.sarvarcorp.fitnestraning.workers.AppDatabase;
 import com.sarvarcorp.fitnestraning.workers.FragmentWorker;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +30,7 @@ public class StaticData {
     private AppDatabase appDatabase;
     private String appApiKey;
     private Mobileapp mobileapp;
-    private List<MobileappConfig> mobileappConfigs;
+    private HashMap<String,String> mobileappConfigs;
     private int mobileappId;
     private FragmentWorker fragmentWorker;
     private MainActivity mainActivity;
@@ -89,12 +92,23 @@ public class StaticData {
         return appDatabase;
     }
 
-    public List<MobileappConfig> getMobileappConfigs() {
+    public HashMap<String, String> getMobileappConfigs() {
         return mobileappConfigs;
     }
 
+    public String getMobileappConfigsLocaleValue(String code) {
+        return getMobileappConfigs().get(code+"|"+getLanguage());
+    }
+
+    public String getMobileappConfigsValue(String code) {
+        return getMobileappConfigs().get(code+"|en");
+    }
+
     public void setMobileappConfigs(List<MobileappConfig> mobileappConfigs) {
-        this.mobileappConfigs = mobileappConfigs;
+        this.mobileappConfigs = new HashMap<>();
+        for (MobileappConfig config: mobileappConfigs) {
+            this.mobileappConfigs.put(config.code+"|"+config.lang,config.value);
+        }
     }
 
     public TimerFragment getTimerFragment() {
@@ -103,5 +117,9 @@ public class StaticData {
 
     public void setTimerFragment(TimerFragment timerFragment) {
         this.timerFragment = timerFragment;
+    }
+
+    public String getLanguage() {
+        return Locale.getDefault().getLanguage();
     }
 }

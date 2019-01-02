@@ -48,7 +48,7 @@ public class MobileappRepository {
                 }
                 response = webservice.getMobileapp(
                         App.getComponent().provideStaticData().getAppApiKey(),
-                        App.getComponent().provideStaticData().getMobileappId(), updatesOnly).execute();
+                        App.getComponent().provideStaticData().getMobileappId(), updatesOnly, App.getComponent().provideStaticData().getLanguage()).execute();
 
                 if (response.isSuccessful() && response.body() != null) {
                     int[] ids = new int[response.body().configs.size()];

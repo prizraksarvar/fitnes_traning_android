@@ -2,6 +2,7 @@ package com.sarvarcorp.fitnestraning;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.ads.AdView;
 import com.sarvarcorp.fitnestraning.base.BaseAppCompatActivity;
@@ -26,6 +27,8 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
     private AdView mAdView;
     private MobileappViewModel viewModel;
     private LiveData<Mobileapp> mobileappLiveData;
+    private LiveData<List<MobileappConfig>> mobileappConfigsLiveData;
+    private MobileappConfigsObserver mobileappConfigsObserver;
 
     private boolean loading = false;
 
@@ -50,18 +53,31 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         mobileappLiveData = viewModel.get();
 
         mobileappLiveData.observe(this,this);
+        mobileappConfigsObserver = new MobileappConfigsObserver();
+        mobileappConfigsLiveData = viewModel.getConfigs();
+        mobileappConfigsLiveData.observe(this,mobileappConfigsObserver);
     }
 
     protected void showLoadingFragment() {
         App.getComponent().provideFragmentWorker().showFragment(LoadingFragment.class, false);
     }
 
+    protected void setViewsLocales() {
+        TextView rateAppText = findViewById(R.id.extraRateAppTextView);
+        TextView bonusText = findViewById(R.id.extraBonusTextView);
+        TextView otherAppText = findViewById(R.id.extraOtherAppTextView);
+        rateAppText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc-rate-app"));
+        bonusText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc-bonus"));
+        otherAppText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc- other-apps"));
+    }
+
     protected void showStartFragment(Mobileapp mobileapp) {
         try {
+            setViewsLocales();
             //toolbar.setVisibility(View.VISIBLE);
             UniversalItem universalItem = new UniversalItem();
             universalItem.id = 0;
-            universalItem.name = mobileapp.name;
+            universalItem.name = App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc-select-training");
             universalItem.viewType = mobileapp.viewType;
             universalItem.backgroundColor = mobileapp.backgroundColor;
             universalItem.description = mobileapp.description;
@@ -127,5 +143,16 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    protected class MobileappConfigsObserver implements Observer<List<MobileappConfig>> {
+
+        @Override
+        public void onChanged(List<MobileappConfig> mobileappConfigs) {
+            if (mobileappConfigs == null) {
+                return;
+            }
+            App.getComponent().provideStaticData().setMobileappConfigs(mobileappConfigs);
+        }
     }
 }
