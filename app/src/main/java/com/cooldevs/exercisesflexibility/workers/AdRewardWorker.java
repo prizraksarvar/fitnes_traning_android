@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.widget.Toast;
 
+import com.cooldevs.exercisesflexibility.MainActivity;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
@@ -44,11 +45,11 @@ public class AdRewardWorker implements RewardedVideoAdListener {
     }
 
     protected SharedPreferences getPreferences() {
-        return context.getSharedPreferences("app-ads-rewarded-video", 0);
+        return context.getSharedPreferences(MainActivity.class.getName(), Context.MODE_PRIVATE);
     }
 
     public boolean isShown(String code) {
-        return getPreferences().getBoolean(code,false);
+        return getPreferences().getBoolean("app-ads-rewarded-video" + code,false);
     }
 
     public void show() {
@@ -86,8 +87,10 @@ public class AdRewardWorker implements RewardedVideoAdListener {
 
     @Override
     public void onRewarded(RewardItem rewardItem) {
-        getPreferences().edit().putBoolean(currentCode,false).commit();
-        App.getComponent().provideAppDatabase().universalItemDao().setBonusAvailable(Integer.parseInt(currentCode));
+        App.getComponent().provideExecutor().execute(()->{
+            App.getComponent().provideAppDatabase().universalItemDao().setBonusAvailable(Integer.parseInt(currentCode));
+            getPreferences().edit().putBoolean("app-ads-rewarded-video" + currentCode,true).apply();
+        });
     }
 
     @Override

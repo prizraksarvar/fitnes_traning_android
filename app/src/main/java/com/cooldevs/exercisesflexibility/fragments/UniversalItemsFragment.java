@@ -62,7 +62,7 @@ public class UniversalItemsFragment extends BaseFragment {
             case "list_with_image_title": currentBackendFragment = new TitleImageListUniversalItemFragment(); isList = true; break;
             case "cart": currentBackendFragment = new CardUniversalItemFragment(); break;
             case "cart_3": currentBackendFragment = new Card3UniversalItemFragment(); break;
-            default: currentBackendFragment = new TitleListUniversalItemFragment();
+            default: currentBackendFragment = new TitleListUniversalItemFragment(); isList = true;
         }
         currentBackendFragment.setCurrentItem(currentItem);
         currentBackendFragment.setFragment(this);
