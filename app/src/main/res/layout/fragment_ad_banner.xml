@@ -6,4 +6,4 @@
     android:layout_height="wrap_content"
     ads:adSize="BANNER"
     ads:adUnitId="@string/adsInterstitialID"
-    tools:context="com.sarvarcorp.fitnestraning.fragments.AdBannerFragment" />
+    tools:context="com.cooldevs.exercisesflexibility.fragments.AdBannerFragment" />

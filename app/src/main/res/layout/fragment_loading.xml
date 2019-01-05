@@ -5,7 +5,7 @@
     android:id="@+id/descriptionContainerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bacgroundLight"
+    android:background="@drawable/bacground"
     android:orientation="vertical">
 
     <ImageView

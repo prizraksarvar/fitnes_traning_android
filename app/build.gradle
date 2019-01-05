@@ -4,7 +4,7 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.sarvarcorp.fitnestraning"
+        applicationId "exercises.flexibility.training.workout.beginners.challenge.flexibilitat.flexibilite.flexibilidad.flessibilita.flexibilidade"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -62,6 +62,7 @@ dependencies {
 
     //Ads
     implementation 'com.google.android.gms:play-services-ads:17.1.2'
+    //implementation 'com.google.android.ads.consent:consent-library:1.0.6'
 
     //Yandex metrica
     // Библиотека Appmetrica SDK.

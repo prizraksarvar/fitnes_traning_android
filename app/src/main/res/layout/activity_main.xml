@@ -28,7 +28,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.sarvarcorp.fitnestraning.fragments.AdBannerFragment"
+        android:name="com.cooldevs.exercisesflexibility.fragments.AdBannerFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

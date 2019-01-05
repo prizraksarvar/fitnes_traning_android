@@ -55,7 +55,7 @@
 
             <fragment
                 android:id="@+id/fragment3"
-                android:name="com.sarvarcorp.fitnestraning.fragments.TimerFragment"
+                android:name="com.cooldevs.exercisesflexibility.fragments.TimerFragment"
                 android:layout_width="195dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -65,7 +65,7 @@
 
     <fragment
         android:id="@+id/fragment2"
-        android:name="com.sarvarcorp.fitnestraning.fragments.ExtraButtonFragment"
+        android:name="com.cooldevs.exercisesflexibility.fragments.ExtraButtonFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
