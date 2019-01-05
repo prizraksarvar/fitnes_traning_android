@@ -5,8 +5,12 @@
     <string name="app_backend_api_key">1234</string>
     <string name="yandex_metrica_app_id"></string>
     <string name="adsApplicationID">ca-app-pub-3940256099942544~3347511713</string>
-    <string name="adsBannerId">ca-app-pub-3940256099942544/1033173711</string>
+    <string name="adsBannerId">ca-app-pub-3940256099942544/6300978111</string>
     <string name="adsInterstitialID">ca-app-pub-3940256099942544/1033173712</string>
+    <string name="adsRewardedVideoID">ca-app-pub-3940256099942544/5224354917</string>
+    <string name="appBundleID">appID</string>
+    <string name="appDeveloperID">Sarvar+corp</string>
+    <string name="developerEmail">sarkhas@mail.ru</string>
     <!-- App Settings -->
 
 

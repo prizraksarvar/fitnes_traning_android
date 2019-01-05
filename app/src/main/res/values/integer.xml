@@ -1,7 +1,7 @@
 <resources>
     <!-- App settings -->
     <integer name="app_backend_app_id">1</integer>
-    <integer name="adsInterstitealIntervalMin">100</integer>
-    <integer name="adsInterstitealIntervalMax">100</integer>
+    <integer name="adsInterstitealIntervalMin">5</integer>
+    <integer name="adsInterstitealIntervalMax">5</integer>
     <!-- App settings -->
 </resources>

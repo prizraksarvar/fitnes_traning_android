@@ -62,18 +62,8 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         App.getComponent().provideFragmentWorker().showFragment(LoadingFragment.class, false);
     }
 
-    protected void setViewsLocales() {
-        TextView rateAppText = findViewById(R.id.extraRateAppTextView);
-        TextView bonusText = findViewById(R.id.extraBonusTextView);
-        TextView otherAppText = findViewById(R.id.extraOtherAppTextView);
-        rateAppText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc-rate-app"));
-        bonusText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc-bonus"));
-        otherAppText.setText(App.getComponent().provideStaticData().getMobileappConfigsLocaleValue("loc- other-apps"));
-    }
-
     protected void showStartFragment(Mobileapp mobileapp) {
         try {
-            setViewsLocales();
             //toolbar.setVisibility(View.VISIBLE);
             UniversalItem universalItem = new UniversalItem();
             universalItem.id = 0;

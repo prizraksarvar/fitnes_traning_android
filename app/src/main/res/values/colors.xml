@@ -17,6 +17,7 @@
 
     <color name="textBackColorDarkOpacity">#c8000000</color>
 
+    <color name="backgroundDark">#c6233e</color>
     <color name="backgroundStart">#f93656</color>
     <color name="backgroundEnd">#fff264</color>
     <color name="backgroundTransparent">#00000000</color>

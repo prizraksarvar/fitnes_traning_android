@@ -26,7 +26,7 @@ import androidx.annotation.Nullable;
 public class TimerFragment extends BaseFragment {
     protected ViewGroup timerLayout = null;
     protected TextView timerTextView = null;
-    protected Button timerButton = null;
+    protected TextView timerButton = null;
 
     protected int timerTime = 0;
     protected int currentTimerTime = 0;

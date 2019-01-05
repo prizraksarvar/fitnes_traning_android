@@ -27,16 +27,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <fragment
-        android:id="@+id/fragment2"
-        android:name="com.sarvarcorp.fitnestraning.fragments.ExtraButtonFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout="@layout/fragment_extra_buttons" />
-
-    <fragment
         android:id="@+id/fragment"
         android:name="com.sarvarcorp.fitnestraning.fragments.AdBannerFragment"
         android:layout_width="match_parent"
