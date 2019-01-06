@@ -85,7 +85,7 @@ public class StaticData {
     public AppDatabase getAppDatabase(Context context) {
         if (appDatabase==null) {
             appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database")
-                    .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3)
+                    .addMigrations(AppDatabase.MIGRATION_1_2, AppDatabase.MIGRATION_2_3, AppDatabase.MIGRATION_3_4)
                     .build();
         }
         return appDatabase;

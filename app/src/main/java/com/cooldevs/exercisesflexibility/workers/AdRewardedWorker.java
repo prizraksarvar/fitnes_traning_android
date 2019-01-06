@@ -15,7 +15,7 @@ import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.fragments.LoadingDialogFragment;
 
-public class AdRewardWorker implements RewardedVideoAdListener {
+public class AdRewardedWorker implements RewardedVideoAdListener {
     private final RewardedVideoAd mRewardedVideoAd;
     protected int countSkip = 0;
     protected InterstitialAd mInterstitialAd;
@@ -29,7 +29,7 @@ public class AdRewardWorker implements RewardedVideoAdListener {
         this.currentCode = currentCode;
     }
 
-    public AdRewardWorker(Context context) {
+    public AdRewardedWorker(Context context) {
         this.context = context;
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
         mRewardedVideoAd.setRewardedVideoAdListener(this);

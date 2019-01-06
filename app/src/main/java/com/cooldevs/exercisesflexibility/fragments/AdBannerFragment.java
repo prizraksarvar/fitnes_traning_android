@@ -5,10 +5,12 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -33,10 +35,6 @@ public class AdBannerFragment extends BaseFragment {
     }
 
     protected void initBunnerAds(View rootView) {
-        MobileAds.initialize(this.getActivity(), getString(R.string.adsApplicationID));
-        AdView adView = new AdView(this.getActivity());
-        adView.setAdSize(AdSize.BANNER);
-        adView.setAdUnitId(getString(R.string.adsInterstitialID));
         mAdView = rootView.findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);

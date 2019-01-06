@@ -66,7 +66,7 @@ public class ExtraButtonFragment extends BaseFragment {
     }
 
     protected void bonus() {
-        App.getAdRewardWorker().show();
+        App.getAdRewardedWorker().show();
     }
 
     protected void otherApps() {

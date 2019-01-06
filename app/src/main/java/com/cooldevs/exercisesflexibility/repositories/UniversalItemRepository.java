@@ -56,7 +56,7 @@ public class UniversalItemRepository {
                         updatesOnly,
                         App.getComponent().provideStaticData().getLanguage()).execute();
 
-                boolean isAvailableBonus = App.getAdRewardWorker().isShown(String.format(Locale.ENGLISH,"%d",parentId));
+                boolean isAvailableBonus = App.getAdRewardedWorker().isShown(String.format(Locale.ENGLISH,"%d",parentId));
                 if (response.isSuccessful() && response.body() != null) {
                     int[] ids = new int[response.body().data.size()];
                     int i = 0;
@@ -94,7 +94,7 @@ public class UniversalItemRepository {
 
                 if (response.isSuccessful() && response.body() != null) {
                     UniversalItem ui = response.body().data;
-                    boolean isAvailableBonus = App.getAdRewardWorker().isShown(String.format(Locale.ENGLISH,"%d",ui.parentId));
+                    boolean isAvailableBonus = App.getAdRewardedWorker().isShown(String.format(Locale.ENGLISH,"%d",ui.parentId));
                     ui.isAvailableBonus = isAvailableBonus;
                     universalItemDao.save(ui);
                 }

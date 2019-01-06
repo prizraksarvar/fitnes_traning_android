@@ -11,18 +11,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.base.BaseDialogFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 
-public class RateAppDialogFragment extends BaseDialogFragment {
+public class RateAppDialogFragment extends BaseDialogFragment implements Observer<String> {
     protected TextView titleTextView = null;
     protected TextView descriptionTextView = null;
     protected ImageView imageView = null;
+    protected LiveData<String> imageLiveData = null;
 
     protected Button yesButton = null;
     protected Button noButton = null;
@@ -47,6 +51,8 @@ public class RateAppDialogFragment extends BaseDialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  super.onCreateView(inflater, container, savedInstanceState);
         initRateDialog(view);
+        imageLiveData = App.getComponent().provideAppDatabase().universalItemDao().getFirstImage();
+        imageLiveData.observe(this,this);
         return view;
     }
 
@@ -72,7 +78,17 @@ public class RateAppDialogFragment extends BaseDialogFragment {
     }
 
     public void showMailToDeveloper() {
-        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto://" + getString(R.string.developerEmail))));
+        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + getString(R.string.developerEmail))));
         dismiss();
+    }
+
+    @Override
+    public void onChanged(String image) {
+        if (image==null || image.equals("")) {
+            return;
+        }
+        Glide.with(this.getContext())
+                .load(image)
+                .into(imageView);
     }
 }

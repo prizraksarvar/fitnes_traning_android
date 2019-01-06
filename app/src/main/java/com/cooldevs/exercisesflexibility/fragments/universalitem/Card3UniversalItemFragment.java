@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
+import com.cooldevs.exercisesflexibility.entities.UniversalItemExtraColumn;
 import com.cooldevs.exercisesflexibility.fragments.TimerFragment;
 
 public class Card3UniversalItemFragment extends TitleImageUniversalItemFragment {
@@ -21,7 +22,20 @@ public class Card3UniversalItemFragment extends TitleImageUniversalItemFragment 
         super.initViews(view);
         timerFragment = App.getComponent().provideStaticData().getTimerFragment();
         timerFragment.setTimerTime(currentItem.timerTime);
+        timerFragment.setOnCompleteListener(this::setIsShown);
         descriptionView = view.findViewById(R.id.universalItemsDescriptionTextView);
+    }
+
+    protected void setIsShown() {
+        App.getComponent().provideExecutor().execute(()->{
+            UniversalItemExtraColumn ec = App.getComponent().provideAppDatabase().universalItemExtraColumnDao().getSync(currentItem.id);
+            if (ec == null) {
+                ec = new UniversalItemExtraColumn();
+                ec.id = currentItem.id;
+            }
+            ec.isShown = true;
+            App.getComponent().provideAppDatabase().universalItemExtraColumnDao().save(ec);
+        });
     }
 
     @Override

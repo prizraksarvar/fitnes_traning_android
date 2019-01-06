@@ -66,7 +66,7 @@ public class UniversalItemsFragment extends BaseFragment {
         }
         currentBackendFragment.setCurrentItem(currentItem);
         currentBackendFragment.setFragment(this);
-        App.getAdRewardWorker().setCurrentCode(String.format(Locale.ENGLISH,"%d",isList?currentItem.id:currentItem.parentId));
+        App.getAdRewardedWorker().setCurrentCode(String.format(Locale.ENGLISH,"%d",isList?currentItem.id:currentItem.parentId));
     }
 
     @Override

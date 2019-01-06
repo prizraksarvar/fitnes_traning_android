@@ -28,6 +28,7 @@ public class TimerFragment extends BaseFragment {
 
     protected Handler timerHandler;
     protected TimerHandler timerHandlerRunable;
+    protected OnCompleteListener onCompleteListener;
 
     @Override
     protected int getLayoutID() {
@@ -38,6 +39,10 @@ public class TimerFragment extends BaseFragment {
         this.timerTime = timerTime;
         currentTimerTime = timerTime;
         updateTimerValue();
+    }
+
+    public void setOnCompleteListener(OnCompleteListener onCompleteListener) {
+        this.onCompleteListener = onCompleteListener;
     }
 
     @Override
@@ -97,6 +102,12 @@ public class TimerFragment extends BaseFragment {
         timerHandler.postDelayed(timerHandlerRunable, 1000);
     }
 
+    protected void onTimerComplete() {
+        if (this.onCompleteListener!=null)
+            this.onCompleteListener.onTimerComplete();
+        timerButton.setText("Start");
+    }
+
     protected class TimerHandler implements Runnable {
 
         @Override
@@ -105,6 +116,13 @@ public class TimerFragment extends BaseFragment {
             updateTimerValue();
             if (currentTimerTime>0)
                 nextTimerSecond();
+            else
+                onTimerComplete();
         }
+
+    }
+
+    public interface OnCompleteListener {
+        void onTimerComplete();
     }
 }
