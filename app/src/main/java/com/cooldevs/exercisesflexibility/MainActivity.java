@@ -1,8 +1,16 @@
 package com.cooldevs.exercisesflexibility;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.ads.consent.ConsentForm;
+import com.google.ads.consent.ConsentFormListener;
+import com.google.ads.consent.ConsentInfoUpdateListener;
+import com.google.ads.consent.ConsentInformation;
+import com.google.ads.consent.ConsentStatus;
+import com.google.ads.consent.DebugGeography;
 import com.google.android.gms.ads.AdView;
 import com.cooldevs.exercisesflexibility.base.BaseAppCompatActivity;
 import com.cooldevs.exercisesflexibility.entities.Mobileapp;
@@ -13,6 +21,8 @@ import com.cooldevs.exercisesflexibility.fragments.UniversalItemsFragment;
 import com.cooldevs.exercisesflexibility.models.MobileappViewModel;
 
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import androidx.appcompat.widget.Toolbar;
@@ -28,6 +38,7 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
     private LiveData<Mobileapp> mobileappLiveData;
     private LiveData<List<MobileappConfig>> mobileappConfigsLiveData;
     private MobileappConfigsObserver mobileappConfigsObserver;
+    private ConsentForm consentForm = null;
 
     private boolean loading = false;
 
@@ -44,8 +55,10 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         loading = true;
         toolbar = this.findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
-        showLoadingFragment();
         toolbar.setVisibility(View.GONE);
+        showLoadingFragment();
+
+        checkConsentInformation(this);
 
         viewModel = ViewModelProviders.of(this).get(MobileappViewModel.class);
         viewModel.init();
@@ -55,6 +68,79 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         mobileappConfigsObserver = new MobileappConfigsObserver();
         mobileappConfigsLiveData = viewModel.getConfigs();
         mobileappConfigsLiveData.observe(this,mobileappConfigsObserver);
+    }
+
+    protected void debugConsestInformation() {
+        ConsentInformation.getInstance(this).
+                setDebugGeography(DebugGeography.DEBUG_GEOGRAPHY_EEA);
+    }
+
+    protected void checkConsentInformation(Context context) {
+        debugConsestInformation();
+        ConsentInformation consentInformation = ConsentInformation.getInstance(this);
+        String[] publisherIds = {getString(R.string.adsPublisherID)};
+        consentInformation.requestConsentInfoUpdate(publisherIds, new ConsentInfoUpdateListener() {
+            @Override
+            public void onConsentInfoUpdated(ConsentStatus consentStatus) {
+                if (consentStatus ==ConsentStatus.UNKNOWN) {
+                    prepareRequestConsentInformation(context);
+                }
+            }
+
+            @Override
+            public void onFailedToUpdateConsentInfo(String errorDescription) {
+
+            }
+        });
+    }
+
+    protected void showRequestConsentInformationForm() {
+        consentForm.show();
+    }
+
+    protected void prepareRequestConsentInformation(Context context) {
+        URL privacyUrl = null;
+        try {
+            privacyUrl = new URL(getString(R.string.adsPrivatePoliceLink));
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            // Handle error.
+        }
+        consentForm = new ConsentForm.Builder(context, privacyUrl)
+                .withListener(new ConsentFormListener() {
+                    @Override
+                    public void onConsentFormLoaded() {
+                        Log.d("AdCI","load");
+                        showRequestConsentInformationForm();
+                    }
+
+                    @Override
+                    public void onConsentFormOpened() {
+                        Log.d("AdCI","opened");
+                    }
+
+                    @Override
+                    public void onConsentFormClosed(
+                            ConsentStatus consentStatus, Boolean userPrefersAdFree) {
+                        // Consent consentForm was closed.
+                        Log.d("AdCI","closed");
+                        if (consentStatus!=ConsentStatus.UNKNOWN) {
+                            ConsentInformation.getInstance(context)
+                                    .setConsentStatus(consentStatus);
+                        }
+                    }
+
+                    @Override
+                    public void onConsentFormError(String errorDescription) {
+                        Log.d("AdCI",errorDescription);
+                    }
+                })
+                .withPersonalizedAdsOption()
+                .withNonPersonalizedAdsOption()
+                .withAdFreeOption()
+                .build();
+
+        consentForm.load();
     }
 
     protected void showLoadingFragment() {
