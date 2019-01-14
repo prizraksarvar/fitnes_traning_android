@@ -2,6 +2,7 @@ package com.cooldevs.exercisesflexibility.dagger.modules;
 
 import android.content.Context;
 
+import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.dagger.StaticData;
 import com.cooldevs.exercisesflexibility.repositories.MobileappRepository;
 import com.cooldevs.exercisesflexibility.repositories.UniversalItemRepository;
@@ -24,9 +25,9 @@ public class StorageModule {
     }
 
     @Provides
-    public Webservice provideWebservice() {
+    public Webservice provideWebservice(Context context) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://artifact-guide.sarvarcorp.ru/")
+                .baseUrl(context.getResources().getString(R.string.app_backend_api_url))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

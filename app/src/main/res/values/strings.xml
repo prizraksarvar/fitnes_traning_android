@@ -3,6 +3,7 @@
 
     <!-- App Settings -->
     <string name="app_backend_api_key">1234</string>
+    <string name="app_backend_api_url">"https://artifact-guide.sarvarcorp.ru/"</string>
     <string name="yandex_metrica_app_id"></string>
     <string name="adsPublisherID">pub-7280670502444208</string>
     <string name="adsPrivatePoliceLink">https://www.your.com/privacyurl</string>
