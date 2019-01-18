@@ -5,6 +5,7 @@ import android.content.Context;
 import com.cooldevs.exercisesflexibility.MainActivity;
 import com.cooldevs.exercisesflexibility.entities.Mobileapp;
 import com.cooldevs.exercisesflexibility.entities.MobileappConfig;
+import com.cooldevs.exercisesflexibility.fragments.AdBannerFragment;
 import com.cooldevs.exercisesflexibility.fragments.TimerFragment;
 import com.cooldevs.exercisesflexibility.workers.AppDatabase;
 import com.cooldevs.exercisesflexibility.workers.FragmentWorker;
@@ -34,6 +35,7 @@ public class StaticData {
     private FragmentWorker fragmentWorker;
     private MainActivity mainActivity;
     private TimerFragment timerFragment;
+    private AdBannerFragment adBannerFragment;
 
     public FragmentManager getFragmentManager() {
         return fragmentManager;
@@ -123,5 +125,13 @@ public class StaticData {
 
     public String getLanguage() {
         return Locale.getDefault().getLanguage();
+    }
+
+    public AdBannerFragment getAdBannerFragment() {
+        return adBannerFragment;
+    }
+
+    public void setAdBannerFragment(AdBannerFragment adBannerFragment) {
+        this.adBannerFragment = adBannerFragment;
     }
 }

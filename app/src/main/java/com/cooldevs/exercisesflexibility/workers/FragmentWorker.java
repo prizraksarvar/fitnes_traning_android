@@ -9,6 +9,7 @@ import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.base.Base;
 import com.cooldevs.exercisesflexibility.base.BaseFragment;
+import com.cooldevs.exercisesflexibility.fragments.AdBannerFragment;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
@@ -71,6 +72,10 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
                 App.getAdInterstitialWorker().showAdsIfNeed();
             }
         },300);
+
+        AdBannerFragment adBannerFragment = App.getComponent().provideStaticData().getAdBannerFragment();
+        if (adBannerFragment!=null)
+            adBannerFragment.loadAds();
     }
 
     public void showFragment(Class<?> clazz, boolean addToBackStack, BaseFragment fragment, View view) {

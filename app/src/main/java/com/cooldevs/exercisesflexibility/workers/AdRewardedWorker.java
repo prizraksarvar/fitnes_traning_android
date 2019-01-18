@@ -35,8 +35,6 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
         mRewardedVideoAd.setRewardedVideoAdListener(this);
 
         loadingDialogFragment = new LoadingDialogFragment();
-
-        loadRewardedVideoAd();
     }
 
     protected void loadRewardedVideoAd() {
@@ -56,6 +54,7 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
         if (mRewardedVideoAd.isLoaded()) {
             mRewardedVideoAd.show();
         } else {
+            loadRewardedVideoAd();
             isNeedShow = true;
             loadingDialogFragment.show(App.getComponent().provideStaticData().getFragmentManager(),loadingDialogFragment.getClass().getName());
         }
@@ -82,7 +81,7 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
 
     @Override
     public void onRewardedVideoAdClosed() {
-        loadRewardedVideoAd();
+
     }
 
     @Override
@@ -105,7 +104,6 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
             isNeedShow = false;
             Toast.makeText(App.getComponent().porvideContext(),"Rewarded Ad load fail",Toast.LENGTH_SHORT).show();
         }
-        loadRewardedVideoAd();
     }
 
     @Override
