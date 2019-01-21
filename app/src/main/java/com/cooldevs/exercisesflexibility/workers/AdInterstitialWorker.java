@@ -1,6 +1,8 @@
 package com.cooldevs.exercisesflexibility.workers;
 
 import android.content.Context;
+
+import com.cooldevs.exercisesflexibility.App;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -8,27 +10,36 @@ import com.cooldevs.exercisesflexibility.R;
 import java.util.*;
 
 public class AdInterstitialWorker {
+    protected static AdInterstitialWorker thisInstance;
     protected int countSkip = 0;
     protected InterstitialAd mInterstitialAd;
     protected Context context;
     protected boolean needShow = false;
+
+    public AdInterstitialWorker getInstance() {
+        if (thisInstance == null) {
+            thisInstance = new AdInterstitialWorker(App.getComponent().provideStaticData().getMainActivity());
+        }
+        return thisInstance;
+    }
+
     public AdInterstitialWorker(Context context) {
         this.context = context;
         mInterstitialAd = new InterstitialAd(context);
         mInterstitialAd.setAdUnitId(context.getString(R.string.adsInterstitialID));
-        loadAds();
+
+        setRandomSkip();
 
         mInterstitialAd.setAdListener(new AdListener(){
             @Override
             public void onAdClosed() {
-                loadAds();
+
             }
 
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
                 if (needShow) {
-                    needShow = false;
                     showAds();
                 }
             }
@@ -49,6 +60,8 @@ public class AdInterstitialWorker {
     }
 
     public Boolean showAds() {
+        if (!needShow)
+            loadAds();
         if (mInterstitialAd.isLoaded()) {
             needShow = false;
             setRandomSkip();

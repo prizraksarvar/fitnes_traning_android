@@ -38,8 +38,7 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
     }
 
     protected void loadRewardedVideoAd() {
-        mRewardedVideoAd.loadAd(context.getString(R.string.adsRewardedVideoID),
-                new AdRequest.Builder().build());
+        mRewardedVideoAd.loadAd(context.getString(R.string.adsRewardedVideoID), new AdRequest.Builder().build());
     }
 
     protected SharedPreferences getPreferences() {
@@ -51,10 +50,11 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
     }
 
     public void show() {
+        if (!isNeedShow)
+            loadRewardedVideoAd();
         if (mRewardedVideoAd.isLoaded()) {
             mRewardedVideoAd.show();
         } else {
-            loadRewardedVideoAd();
             isNeedShow = true;
             loadingDialogFragment.show(App.getComponent().provideStaticData().getFragmentManager(),loadingDialogFragment.getClass().getName());
         }
