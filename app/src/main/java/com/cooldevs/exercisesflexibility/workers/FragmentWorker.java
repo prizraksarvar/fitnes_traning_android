@@ -12,6 +12,7 @@ import com.cooldevs.exercisesflexibility.base.BaseFragment;
 import com.cooldevs.exercisesflexibility.fragments.AdBannerFragment;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Random;
 
 import javax.inject.Inject;
@@ -95,6 +96,12 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
         fragmentTranaction.commit();
     }
 
+    public void restoreFragmentsState() {
+        List<Fragment> fs = fragmentManager.getFragments();
+        Fragment fragment = fs.get(fs.size()-1);
+        showFragment(fragment.getClass(),false, (BaseFragment) fragment, fragment.getView());
+    }
+
     public BaseFragment getCurrentFragment() {
         int i = fragmentManager.getFragments().size();
         while (i>0) {
@@ -122,6 +129,6 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
     }
 
     public void onActivityDestroy() {
-        currentFragment = null;
+        //currentFragment = null;
     }
 }

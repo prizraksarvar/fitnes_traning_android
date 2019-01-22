@@ -84,6 +84,10 @@ public class StaticData {
         return fragmentWorker;
     }
 
+    public void setFragmentWorker(FragmentWorker fragmentWorker) {
+        this.fragmentWorker = fragmentWorker;
+    }
+
     public AppDatabase getAppDatabase(Context context) {
         if (appDatabase==null) {
             appDatabase = Room.databaseBuilder(context, AppDatabase.class, "database")

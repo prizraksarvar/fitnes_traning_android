@@ -2,6 +2,7 @@ package com.cooldevs.exercisesflexibility;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
 
@@ -56,6 +57,7 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         toolbar = this.findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.GONE);
+
         showLoadingFragment();
 
         checkConsentInformation(this);
@@ -68,6 +70,10 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
         mobileappConfigsObserver = new MobileappConfigsObserver();
         mobileappConfigsLiveData = viewModel.getConfigs();
         mobileappConfigsLiveData.observe(this,mobileappConfigsObserver);
+    }
+
+    protected void restoreFragmentsState() {
+        App.getComponent().provideFragmentWorker().restoreFragmentsState();
     }
 
     protected void debugConsestInformation() {
@@ -168,10 +174,8 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
 
     @Override
     protected void onDestroy() {
-        App.getComponent().provideFragmentWorker().onActivityDestroy();
-
+        App.getComponent().provideStaticData().setFragmentWorker(null);
         super.onDestroy();
-        System.exit(0);
     }
 
     @Override
