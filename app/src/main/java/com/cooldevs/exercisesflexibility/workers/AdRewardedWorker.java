@@ -25,6 +25,15 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
     protected boolean isNeedShow = false;
     protected LoadingDialogFragment loadingDialogFragment;
 
+    protected static AdRewardedWorker thisInstance;
+
+    public static AdRewardedWorker getInstance() {
+        if (thisInstance == null) {
+            thisInstance = new AdRewardedWorker(App.getComponent().provideStaticData().getMainActivity());
+        }
+        return thisInstance;
+    }
+
     public void setCurrentCode(String currentCode) {
         this.currentCode = currentCode;
     }

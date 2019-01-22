@@ -1,6 +1,7 @@
 package com.cooldevs.exercisesflexibility.workers;
 
 import android.content.Context;
+import android.os.Handler;
 
 import com.cooldevs.exercisesflexibility.App;
 import com.google.android.gms.ads.AdListener;
@@ -10,13 +11,15 @@ import com.cooldevs.exercisesflexibility.R;
 import java.util.*;
 
 public class AdInterstitialWorker {
-    protected static AdInterstitialWorker thisInstance;
     protected int countSkip = 0;
     protected InterstitialAd mInterstitialAd;
     protected Context context;
     protected boolean needShow = false;
+    protected boolean adOpened = false;
 
-    public AdInterstitialWorker getInstance() {
+    protected static AdInterstitialWorker thisInstance;
+
+    public static AdInterstitialWorker getInstance() {
         if (thisInstance == null) {
             thisInstance = new AdInterstitialWorker(App.getComponent().provideStaticData().getMainActivity());
         }
@@ -33,7 +36,8 @@ public class AdInterstitialWorker {
         mInterstitialAd.setAdListener(new AdListener(){
             @Override
             public void onAdClosed() {
-
+                adOpened = false;
+                super.onAdClosed();
             }
 
             @Override
@@ -42,6 +46,18 @@ public class AdInterstitialWorker {
                 if (needShow) {
                     showAds();
                 }
+            }
+
+            @Override
+            public void onAdOpened() {
+                super.onAdOpened();
+                adOpened = true;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        //adOpened = false;
+                    }
+                },3000);
             }
         });
     }
@@ -79,5 +95,9 @@ public class AdInterstitialWorker {
             countSkip = 0;
             showAds();
         }
+    }
+
+    public boolean isAdOpened() {
+        return adOpened;
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.base.BaseFragment;
+import com.cooldevs.exercisesflexibility.workers.AdRewardedWorker;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -66,7 +67,7 @@ public class ExtraButtonFragment extends BaseFragment {
     }
 
     protected void bonus() {
-        App.getAdRewardedWorker().show();
+        AdRewardedWorker.getInstance().show();
     }
 
     protected void otherApps() {

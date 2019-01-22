@@ -15,15 +15,11 @@ import com.yandex.metrica.YandexMetricaConfig;
 
 public class App extends Application {
     private static AppComponent component;
-    private static AdInterstitialWorker adInterstitialWorker = null;
-    private static AdRewardedWorker adRewardedWorker = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
         MobileAds.initialize(this, getString(R.string.adsApplicationID));
-        adInterstitialWorker = new AdInterstitialWorker(this);
-        adRewardedWorker = new AdRewardedWorker(this);
         component = DaggerAppComponent.builder()
                 .contextModule(new ContextModule(this))
                 .baseModule(new BaseModule(new StaticData()))
@@ -46,15 +42,6 @@ public class App extends Application {
 
     @Override
     public void onTerminate() {
-        adInterstitialWorker = null;
         super.onTerminate();
-    }
-
-    public static AdInterstitialWorker getAdInterstitialWorker() {
-        return adInterstitialWorker;
-    }
-
-    public static AdRewardedWorker getAdRewardedWorker() {
-        return adRewardedWorker;
     }
 }

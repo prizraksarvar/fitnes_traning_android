@@ -14,6 +14,7 @@ import com.cooldevs.exercisesflexibility.fragments.universalitem.CardUniversalIt
 import com.cooldevs.exercisesflexibility.fragments.universalitem.ImageListUniversalItemFragment;
 import com.cooldevs.exercisesflexibility.fragments.universalitem.TitleImageListUniversalItemFragment;
 import com.cooldevs.exercisesflexibility.fragments.universalitem.TitleListUniversalItemFragment;
+import com.cooldevs.exercisesflexibility.workers.AdRewardedWorker;
 
 import java.util.Locale;
 
@@ -66,7 +67,7 @@ public class UniversalItemsFragment extends BaseFragment {
         }
         currentBackendFragment.setCurrentItem(currentItem);
         currentBackendFragment.setFragment(this);
-        App.getAdRewardedWorker().setCurrentCode(String.format(Locale.ENGLISH,"%d",isList?currentItem.id:currentItem.parentId));
+        AdRewardedWorker.getInstance().setCurrentCode(String.format(Locale.ENGLISH,"%d",isList?currentItem.id:currentItem.parentId));
     }
 
     @Override

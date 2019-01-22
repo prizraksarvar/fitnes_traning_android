@@ -70,7 +70,7 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
         h.postDelayed(new Runnable() {
             @Override
             public void run() {
-                App.getAdInterstitialWorker().showAdsIfNeed();
+                AdInterstitialWorker.getInstance().showAdsIfNeed();
             }
         },300);
 

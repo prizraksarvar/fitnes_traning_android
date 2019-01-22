@@ -3,6 +3,7 @@ package com.cooldevs.exercisesflexibility.repositories;
 import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.daos.UniversalItemDao;
 import com.cooldevs.exercisesflexibility.entities.UniversalItem;
+import com.cooldevs.exercisesflexibility.workers.AdRewardedWorker;
 import com.cooldevs.exercisesflexibility.workers.Webservice;
 
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class UniversalItemRepository {
                         updatesOnly,
                         App.getComponent().provideStaticData().getLanguage()).execute();
 
-                boolean isAvailableBonus = App.getAdRewardedWorker().isShown(String.format(Locale.ENGLISH,"%d",parentId));
+                boolean isAvailableBonus = AdRewardedWorker.getInstance().isShown(String.format(Locale.ENGLISH,"%d",parentId));
                 if (response.isSuccessful() && response.body() != null) {
                     int[] ids = new int[response.body().data.size()];
                     int i = 0;
@@ -94,7 +95,7 @@ public class UniversalItemRepository {
 
                 if (response.isSuccessful() && response.body() != null) {
                     UniversalItem ui = response.body().data;
-                    boolean isAvailableBonus = App.getAdRewardedWorker().isShown(String.format(Locale.ENGLISH,"%d",ui.parentId));
+                    boolean isAvailableBonus = AdRewardedWorker.getInstance().isShown(String.format(Locale.ENGLISH,"%d",ui.parentId));
                     ui.isAvailableBonus = isAvailableBonus;
                     universalItemDao.save(ui);
                 }
