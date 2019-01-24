@@ -67,6 +67,7 @@ public class StaticData {
 
     public void setMobileapp(Mobileapp mobileapp) {
         this.mobileapp = mobileapp;
+        setMobileappId(mobileapp.id);
     }
 
     public int getMobileappId() {

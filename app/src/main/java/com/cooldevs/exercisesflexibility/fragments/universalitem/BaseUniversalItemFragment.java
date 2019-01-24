@@ -3,6 +3,7 @@ package com.cooldevs.exercisesflexibility.fragments.universalitem;
 import android.graphics.Color;
 import android.transition.ChangeBounds;
 import android.transition.Fade;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -41,6 +42,7 @@ public abstract class BaseUniversalItemFragment {
     public void onCreate() {
         viewModel = ViewModelProviders.of(fragment).get(UniversalItemsViewModel.class);
         viewModel.init(currentItem != null ? currentItem.id : 0);
+        Log.d("app/test","BaseUniversalItemFragment:onCreate = " + (currentItem != null ? currentItem.id : 0));
     }
 
     public UniversalItem getCurrentItem() {

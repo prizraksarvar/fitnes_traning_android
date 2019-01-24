@@ -23,7 +23,7 @@ public interface UniversalItemExtraColumnDao {
     @Query("SELECT * FROM UniversalItemExtraColumn WHERE id = :id")
     UniversalItemExtraColumn getSync(int id);
 
-    @Query("SELECT * FROM UniversalItemExtraColumn as ec INNER JOIN UniversalItem as ui ON ui.id=ec.id WHERE ui.parentId = :parentId")
+    @Query("SELECT ec.* FROM UniversalItemExtraColumn as ec INNER JOIN UniversalItem as ui ON ui.id=ec.id WHERE ui.parentId = :parentId")
     LiveData<List<UniversalItemExtraColumn>> getList(int parentId);
 
     @Query("UPDATE UniversalItemExtraColumn SET isShown=1 WHERE id = :id")

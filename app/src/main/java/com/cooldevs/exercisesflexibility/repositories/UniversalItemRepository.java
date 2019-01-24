@@ -52,7 +52,7 @@ public class UniversalItemRepository {
                 }
                 response = webservice.getUniversalItems(
                         App.getComponent().provideStaticData().getAppApiKey(),
-                        App.getComponent().provideStaticData().getMobileapp().id,
+                        App.getComponent().provideStaticData().getMobileappId(),
                         parentId,
                         updatesOnly,
                         App.getComponent().provideStaticData().getLanguage()).execute();
@@ -88,7 +88,7 @@ public class UniversalItemRepository {
                 }
                 response = webservice.getUniversalItem(
                         App.getComponent().provideStaticData().getAppApiKey(),
-                        App.getComponent().provideStaticData().getMobileapp().id,
+                        App.getComponent().provideStaticData().getMobileappId(),
                         id,
                         updatesOnly,
                         App.getComponent().provideStaticData().getLanguage()).execute();

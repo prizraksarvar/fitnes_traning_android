@@ -23,6 +23,7 @@ import com.cooldevs.exercisesflexibility.fragments.LoadingFragment;
 import com.cooldevs.exercisesflexibility.fragments.UniversalItemsFragment;
 import com.cooldevs.exercisesflexibility.models.MobileappViewModel;
 
+import java.io.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -47,20 +48,22 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("app/test","MainActivity:onCreate");
+        App.getComponent().provideStaticData().setMainActivity(this);
+        App.getComponent().provideStaticData().setMobileappId(getResources().getInteger(R.integer.app_backend_app_id));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         App.getComponent().provideStaticData().setFragmentManager(getSupportFragmentManager());
-        App.getComponent().provideStaticData().setMainActivity(this);
         App.getComponent().provideStaticData().setAppApiKey(getResources().getString(R.string.app_backend_api_key));
-        App.getComponent().provideStaticData().setMobileappId(getResources().getInteger(R.integer.app_backend_app_id));
 
-        loading = true;
         toolbar = this.findViewById(R.id.mainToolbar);
         setSupportActionBar(toolbar);
         toolbar.setVisibility(View.GONE);
 
-        showLoadingFragment();
+        if (savedInstanceState==null) {
+            loading = true;
+            showLoadingFragment();
+        }
 
         checkConsentInformation(this);
 
@@ -176,6 +179,7 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
 
     @Override
     protected void onDestroy() {
+        Log.d("app/test","MainActivity:onDestroy");
         App.getComponent().provideStaticData().setFragmentWorker(null);
         super.onDestroy();
     }
@@ -235,5 +239,34 @@ public class MainActivity extends BaseAppCompatActivity implements Observer<Mobi
             }
             App.getComponent().provideStaticData().setMobileappConfigs(mobileappConfigs);
         }
+    }
+
+    @Override
+    protected void onStart() {
+        Log.d("app/test","MainActivity:onStart");
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        Log.d("app/test","MainActivity:onStop");
+        super.onStop();
+    }
+
+    @Override
+    protected void onRestart() {
+        Log.d("app/test","MainActivity:onRestart");
+        super.onRestart();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        Log.d("app/test","MainActivity:onSaveInstanceState");
+        super.onSaveInstanceState(outState);
     }
 }
