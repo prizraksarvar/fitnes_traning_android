@@ -48,7 +48,6 @@ public class TimerFragment extends BaseFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getComponent().provideStaticData().setTimerFragment(this);
         timerHandlerRunable = new TimerHandler();
         timerHandler = new Handler();
     }
@@ -62,6 +61,7 @@ public class TimerFragment extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  super.onCreateView(inflater, container, savedInstanceState);
+        App.getComponent().provideStaticData().setTimerFragment(this);
         initTimer(view);
         return view;
     }

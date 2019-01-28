@@ -84,14 +84,14 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
 
         setFragmentShowAnimations(fragmentTranaction, addToBackStack, fragment, view);
 
-        if (currentFragment==null) {
-            fragmentTranaction.add(R.id.mainContainer, fragment);
-        } else {
+        //if (currentFragment==null) {
+        //    fragmentTranaction.add(R.id.mainContainer, fragment);
+        //} else {
             fragmentTranaction.replace(R.id.mainContainer, fragment);
             if (addToBackStack) {
                 fragmentTranaction.addToBackStack(clazz.getName());
             }
-        }
+        //}
         currentFragment = clazz;
         fragmentTranaction.commit();
     }
