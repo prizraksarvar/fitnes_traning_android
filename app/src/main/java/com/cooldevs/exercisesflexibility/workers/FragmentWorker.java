@@ -80,6 +80,8 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
     }
 
     public void showFragment(Class<?> clazz, boolean addToBackStack, BaseFragment fragment, View view) {
+        if (fragmentManager.isStateSaved())
+            return;
         FragmentTransaction fragmentTranaction = fragmentManager.beginTransaction();
 
         setFragmentShowAnimations(fragmentTranaction, addToBackStack, fragment, view);
