@@ -73,10 +73,6 @@ public class FragmentWorker extends Base implements FragmentManager.OnBackStackC
                 AdInterstitialWorker.getInstance().showAdsIfNeed();
             }
         },300);
-
-        AdBannerFragment adBannerFragment = App.getComponent().provideStaticData().getAdBannerFragment();
-        if (adBannerFragment!=null)
-            adBannerFragment.loadAds();
     }
 
     public void showFragment(Class<?> clazz, boolean addToBackStack, BaseFragment fragment, View view) {
