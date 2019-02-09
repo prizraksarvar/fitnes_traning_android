@@ -44,7 +44,7 @@ public class RateAppDialogFragment extends BaseDialogFragment implements Observe
     @Override
     public void onDestroy() {
         App.getComponent().provideStaticData().setTimerFragment(null);
-        super.onDestroy();
+        super.onDestroy();super.onDestroy();
     }
 
     @Override

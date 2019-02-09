@@ -71,9 +71,10 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        if (isNeedShow) {
+        if (isNeedShow && loadingDialogFragment.isAdded()) {
             isNeedShow = false;
-            loadingDialogFragment.dismiss();
+            if (!loadingDialogFragment.isStateSaved())
+                loadingDialogFragment.dismiss();
             mRewardedVideoAd.show();
         }
     }

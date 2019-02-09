@@ -4,6 +4,7 @@ package com.cooldevs.exercisesflexibility.fragments;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,8 @@ import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.base.BaseFragment;
 import com.cooldevs.exercisesflexibility.workers.AdRewardedWorker;
+
+import java.util.concurrent.ExecutionException;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +28,8 @@ public class ExtraButtonFragment extends BaseFragment {
     protected ConstraintLayout rateAppButton;
     protected ConstraintLayout bonusButton;
     protected ConstraintLayout otherAppButton;
+
+    protected boolean isProccess = false;
 
 
     @Override
@@ -57,26 +62,46 @@ public class ExtraButtonFragment extends BaseFragment {
     }
 
     protected void setViewsEvents() {
-        rateAppButton.setOnClickListener(v -> rateApp());
+        rateAppButton.setOnClickListener(v -> showRateDialog());
         bonusButton.setOnClickListener(v -> bonus());
         otherAppButton.setOnClickListener(v -> otherApps());
     }
 
-    protected void rateApp() {
-        showRateDialog();
+    protected void setProccessStarted() throws InterruptedException {
+        if (isProccess)
+            throw new InterruptedException();
+        isProccess = true;
+        new Handler().postDelayed(()->{isProccess=false;},400);
     }
 
     protected void bonus() {
+        try {
+            setProccessStarted();
+        } catch (InterruptedException e) {
+            return;
+        }
         AdRewardedWorker.getInstance().show();
     }
 
     protected void otherApps() {
+        try {
+            setProccessStarted();
+        } catch (InterruptedException e) {
+            return;
+        }
         //getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=" + getString(R.string.appDeveloperID))));
         getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + getString(R.string.appDeveloperID))));
     }
 
+
     public void showRateDialog() {
+        try {
+            setProccessStarted();
+        } catch (InterruptedException e) {
+            return;
+        }
         final RateAppDialogFragment dialog = new RateAppDialogFragment();
-        dialog.show(App.getComponent().provideStaticData().getFragmentManager(),dialog.getClass().getName());
+        if (!App.getComponent().provideStaticData().getFragmentManager().isStateSaved())
+            dialog.show(App.getComponent().provideStaticData().getFragmentManager(),dialog.getClass().getName());
     }
 }
