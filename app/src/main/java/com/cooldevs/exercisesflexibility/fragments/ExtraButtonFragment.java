@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
@@ -90,7 +91,12 @@ public class ExtraButtonFragment extends BaseFragment {
             return;
         }
         //getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://dev?id=" + getString(R.string.appDeveloperID))));
-        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + getString(R.string.appDeveloperID))));
+        try {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + getString(R.string.appDeveloperID))));
+        } catch (Exception exception) {
+            Toast.makeText(getContext(),"Play market not found",Toast.LENGTH_SHORT).show();
+            exception.printStackTrace();
+        }
     }
 
 

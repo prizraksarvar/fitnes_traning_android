@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cooldevs.exercisesflexibility.App;
@@ -73,12 +74,22 @@ public class RateAppDialogFragment extends BaseDialogFragment implements Observe
     }
 
     protected void showRateApp() {
-        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getString(R.string.appBundleID))));
+        try {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getString(R.string.appBundleID))));
+        } catch (Exception exception) {
+            Toast.makeText(getContext(),"Play market not found",Toast.LENGTH_SHORT).show();
+            exception.printStackTrace();
+        }
         dismiss();
     }
 
     public void showMailToDeveloper() {
-        getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + getString(R.string.developerEmail))));
+        try {
+            getContext().startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mailto:" + getString(R.string.developerEmail))));
+        } catch (Exception exception) {
+            Toast.makeText(getContext(),"Mail app not found",Toast.LENGTH_SHORT).show();
+            exception.printStackTrace();
+        }
         dismiss();
     }
 
