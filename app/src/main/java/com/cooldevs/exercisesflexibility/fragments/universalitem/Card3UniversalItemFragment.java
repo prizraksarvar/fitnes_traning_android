@@ -20,10 +20,13 @@ public class Card3UniversalItemFragment extends TitleImageUniversalItemFragment 
     @Override
     protected void initViews(View view) {
         super.initViews(view);
+        descriptionView = view.findViewById(R.id.universalItemsDescriptionTextView);
         timerFragment = App.getComponent().provideStaticData().getTimerFragment();
+        if (timerFragment==null) {
+            return;
+        }
         timerFragment.setTimerTime(currentItem.timerTime);
         timerFragment.setOnCompleteListener(this::setIsShown);
-        descriptionView = view.findViewById(R.id.universalItemsDescriptionTextView);
     }
 
     protected void setIsShown() {

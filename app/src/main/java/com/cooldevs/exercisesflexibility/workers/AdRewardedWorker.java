@@ -18,7 +18,6 @@ import com.cooldevs.exercisesflexibility.fragments.LoadingDialogFragment;
 public class AdRewardedWorker implements RewardedVideoAdListener {
     private final RewardedVideoAd mRewardedVideoAd;
     protected int countSkip = 0;
-    protected InterstitialAd mInterstitialAd;
     protected Context context;
     protected boolean needShow = false;
     protected String currentCode = "";
@@ -65,7 +64,9 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
             mRewardedVideoAd.show();
         } else {
             isNeedShow = true;
-            loadingDialogFragment.show(App.getComponent().provideStaticData().getFragmentManager(),loadingDialogFragment.getClass().getName());
+            if (!loadingDialogFragment.isStateSaved() && !loadingDialogFragment.isAdded()) {
+                loadingDialogFragment.show(App.getComponent().provideStaticData().getFragmentManager(), loadingDialogFragment.getClass().getName());
+            }
         }
     }
 
@@ -110,7 +111,9 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
         if (isNeedShow) {
-            loadingDialogFragment.dismiss();
+            if (!loadingDialogFragment.isStateSaved()) {
+                loadingDialogFragment.dismiss();
+            }
             isNeedShow = false;
             Toast.makeText(App.getComponent().porvideContext(),"Rewarded Ad load fail",Toast.LENGTH_SHORT).show();
         }
