@@ -15,7 +15,11 @@ import com.cooldevs.exercisesflexibility.App;
 import com.cooldevs.exercisesflexibility.R;
 import com.cooldevs.exercisesflexibility.fragments.LoadingDialogFragment;
 
-public class AdRewardedWorker implements RewardedVideoAdListener {
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
+public class AdRewardedWorker implements RewardedVideoAdListener, LifecycleObserver {
     private final RewardedVideoAd mRewardedVideoAd;
     protected int countSkip = 0;
     protected Context context;
@@ -41,7 +45,7 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
         this.context = context;
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
-
+        App.getComponent().provideStaticData().getMainActivity().getLifecycle().addObserver(this);
         loadingDialogFragment = new LoadingDialogFragment();
     }
 
@@ -122,5 +126,15 @@ public class AdRewardedWorker implements RewardedVideoAdListener {
     @Override
     public void onRewardedVideoCompleted() {
 
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    public void onResume() {
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    public void onPause() {
+        thisInstance = null;
     }
 }
