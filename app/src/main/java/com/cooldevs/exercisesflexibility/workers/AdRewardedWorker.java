@@ -44,7 +44,9 @@ public class AdRewardedWorker implements RewardedVideoAdListener, LifecycleObser
     public AdRewardedWorker(Context context) {
         this.context = context;
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(context);
-        mRewardedVideoAd.setRewardedVideoAdListener(this);
+        App.getComponent().provideStaticData().getMainActivity().runOnUiThread(()->{
+            mRewardedVideoAd.setRewardedVideoAdListener(this);
+        });
         App.getComponent().provideStaticData().getMainActivity().getLifecycle().addObserver(this);
         loadingDialogFragment = new LoadingDialogFragment();
     }
